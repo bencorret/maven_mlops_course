@@ -11,3 +11,10 @@ tasks:
     cmds:
       - uv venv -p {{.PYTHON_VERSION}} .venv
     silent: false
+
+  sync-dev:
+    desc: Sync project dependencies with optionals
+    cmds:
+      - rm -rf .venv
+      - task: create-venv
+      - uv sync --extra dev
