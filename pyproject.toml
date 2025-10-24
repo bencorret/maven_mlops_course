@@ -30,7 +30,7 @@ dev = ["databricks-connect==15.4.5",
        "pip>=24.2",
        "pre-commit>=4.1.0, <5",
        "pytest>=8.3.4, <9",
-       "marvelous@git+https://github.com/end-to-end-mlops-databricks-3/marvelous@0.3.1",
+       "mlops_external_library@git+https://github.com/bencorret/trainings/tree/master/mlops_external_library@master",
     ]
 
 [build-system]
