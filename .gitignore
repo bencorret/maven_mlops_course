@@ -1,6 +1,9 @@
-# empty file for now
+# VSCode add-ins
 .databricks
 .vscode
+
+# Environment files
+.env
 
 # Something created by the VSCode Databricks extentions
 typings/
