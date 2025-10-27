@@ -4,6 +4,7 @@
 
 # Environment files
 .env
+.netrc
 
 # Something created by the VSCode Databricks extentions
 typings/

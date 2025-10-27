@@ -24,13 +24,16 @@ dependencies = [
 
 dynamic = ['version']
 
+[tool.uv.sources]
+mlops_external_library = {git = "https://@github.com/bencorret/trainings", subdirectory="mlops_external_library", rev="master"}
+
 [project.optional-dependencies]
 dev = ["databricks-connect==15.4.5",
        "ipykernel>=6.29.5, <7",
        "pip>=24.2",
        "pre-commit>=4.1.0, <5",
        "pytest>=8.3.4, <9",
-       "mlops_external_library@git+https://github.com/bencorret/trainings@master#subdirectory=mlops_external_library",
+       "mlops_external_library",
     ]
 
 [build-system]

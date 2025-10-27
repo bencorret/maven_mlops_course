@@ -1,14 +1,23 @@
 # Databricks notebook source
-# % pip install -e ..
-# %restart_python
-
-# from pathlib import Path
-# import sys
-# sys.path.append(str(Path.cwd().parent / 'src'))
+# COMMAND ----------
+# Get PAT token and install external library
+git_token = dbutils.secrets.get(scope="mlops_maven", key="pat_token")
+install_cmd = f"git+https://{git_token}@github.com/bencorret/trainings@master#subdirectory=mlops_external_library"
 
 # COMMAND ----------
+%pip install $install_cmd
 
-# This is sync test
+# COMMAND ----------
+# Install your main project in editable mode
+%pip install -e ..
+
+# COMMAND ----------
+# Restart Python to pick up both installations
+%restart_python
+
+from pathlib import Path
+import sys
+sys.path.append(str(Path.cwd().parent / 'src'))
 
 # COMMAND ----------
 
@@ -17,6 +26,7 @@ import yaml
 import sys
 from pyspark.sql import SparkSession
 import pandas as pd
+import os
 
 from house_price.config import ProjectConfig
 from house_price.data_processor import DataProcessor
