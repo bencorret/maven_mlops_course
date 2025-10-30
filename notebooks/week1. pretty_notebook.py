@@ -5,16 +5,17 @@ git_token = dbutils.secrets.get(scope="mlops_maven", key="pat_token")
 install_cmd = f"git+https://{git_token}@github.com/bencorret/trainings@master#subdirectory=mlops_external_library"
 
 # COMMAND ----------
-%pip install $install_cmd
+# %pip install $install_cmd
 
 # COMMAND ----------
 # Install your main project in editable mode
-%pip install -e ..
+# %pip install -e ..
 
 # COMMAND ----------
 # Restart Python to pick up both installations
-%restart_python
+# %restart_python
 
+# COMMAND ----------
 from pathlib import Path
 import sys
 sys.path.append(str(Path.cwd().parent / 'src'))
