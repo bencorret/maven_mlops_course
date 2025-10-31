@@ -1,3 +1,14 @@
-# empty file for now
+# VSCode add-ins
 .databricks
 .vscode
+
+# Environment files
+.env
+.netrc
+
+# Something created by the VSCode Databricks extentions
+typings/
+
+# Python package metadata
+*.egg-info/
+*.egg
