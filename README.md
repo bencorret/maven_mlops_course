@@ -186,7 +186,7 @@ Development dependencies include `databricks-connect` for local development and 
 
 ## Version
 
-Current version: `v0.1`
+Current version: `0.0.1`
 
 ## License
 
