@@ -19,48 +19,64 @@ def is_databricks():
 
 
 # COMMAND ----------
+
 mlflow.get_tracking_uri()
 
 # COMMAND ----------
+
 if not is_databricks():
     load_dotenv()
     profile = os.environ["PROFILE"]
     mlflow.set_tracking_uri(f"databricks://{profile}")
 
+# Setting the registery URI is mandatory when working on a severless cluster
+mlflow.set_registry_uri("databricks-uc")
+
 mlflow.get_tracking_uri()
+
 # COMMAND ----------
+
 experiment = mlflow.set_experiment(experiment_name="/Shared/demo")
 mlflow.set_experiment_tags({"repository_name": "trainings/maven_mlops_course"})
 
 print(experiment)
+
 # COMMAND ----------
+
 # dump class attributes in a json file for visualization
 with open("../demo_artifacts/mlflow_experiment.json", "w") as json_file:
     json.dump(experiment.__dict__, json_file, indent=4)
 
 # COMMAND ----------
+
 # get experiment by id
 mlflow.get_experiment(experiment.experiment_id)
+
 # COMMAND ----------
+
 # search for experiment
 experiments = mlflow.search_experiments(
-    filter_string="tags.repository_name='end-to-end-mlops-databricks-3/course-code-hub'"
+    filter_string="tags.repository_name='trainings/maven_mlops_course'"
 )
 print(experiments)
 
 # COMMAND ----------
+
 # start a run
 mlflow.start_run()
 
 # COMMAND ----------
+
 # get active run
 print(mlflow.active_run().__dict__)
 
 # COMMAND ----------
+
 mlflow.end_run()
 print(mlflow.active_run() is None)
 
 # COMMAND ----------
+
 # start a run
 with mlflow.start_run(
     run_name="demo-run",
@@ -71,21 +87,27 @@ with mlflow.start_run(
     run_id = run.info.run_id
     mlflow.log_params({"type": "demo"})
     mlflow.log_metrics({"metric1": 1.0, "metric2": 2.0})
+
 # COMMAND ----------
+
 print(mlflow.active_run() is None)
 
 # COMMAND ----------
+
 run_info = mlflow.get_run(run_id=run_id).to_dictionary()
 print(run_info)
 
 # COMMAND ----------
+
 with open("../demo_artifacts/run_info.json", "w") as json_file:
     json.dump(run_info, json_file, indent=4)
 
 # COMMAND ----------
+
 print(run_info["data"]["metrics"])
 
 # COMMAND ----------
+
 print(run_info["data"]["params"])
 
 # COMMAND ----------
@@ -98,16 +120,21 @@ run_info = mlflow.get_run(run_id=f"{run_id}").to_dictionary()
 print(run_info)
 
 # COMMAND ----------
+
 mlflow.start_run(run_id=run_id)
 
 # COMMAND ----------
+
 # this will fail: not allowed to overwrite value
 mlflow.log_param("type", "demo2")
+
 # COMMAND ----------
+
 mlflow.log_param(key="purpose", value="get_certified")
 mlflow.end_run()
 
 # COMMAND ----------
+
 # start another run and log other things
 mlflow.start_run(run_name="demo-run-extra",
                  tags={"git_sha": "1234567890abcd",
@@ -123,6 +150,7 @@ mlflow.log_dict({"k": "v"}, "dict_example.json")
 mlflow.log_artifacts("../demo_artifacts", artifact_path="demo_artifacts")
 
 # COMMAND ----------
+
 # log figure
 import matplotlib.pyplot as plt
 
@@ -132,7 +160,9 @@ ax.plot([0, 1], [2, 3])
 mlflow.log_figure(fig, "figure.png")
 
 # log image dynamically
+
 # COMMAND ----------
+
 import numpy as np
 
 for i in range(0,3):
@@ -142,6 +172,7 @@ for i in range(0,3):
 mlflow.end_run()
 
 # COMMAND ----------
+
 # other ways
 from time import time
 time_hour_ago = int(time() - 3600) * 1000
@@ -155,24 +186,31 @@ runs = mlflow.search_runs(
                   "metrics.metric3>0 AND "
                   "tags.mlflow.source.type!='JOB'"
 )
+
 # COMMAND ----------
+
 runs
 
 # COMMAND ----------
+
 # load objects
 artifact_uri = runs.artifact_uri[0]
 mlflow.artifacts.load_dict(f"{artifact_uri}/dict_example.json")
 # nested runs
 
 # COMMAND ----------
+
 mlflow.artifacts.load_image(f"{artifact_uri}/figure.png")
+
 # COMMAND ----------
+
 # download artifacts
 mlflow.artifacts.download_artifacts(
     artifact_uri=f"{artifact_uri}/demo_artifacts",
     dst_path="../downloaded_artifacts")
 
 # COMMAND ----------
+
 # nested runs: useful for hyperparameter tuning
 with mlflow.start_run(run_name="top_level_run") as run:
     for i in range(1,5):
