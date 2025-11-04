@@ -90,7 +90,11 @@ artifact_uri = mlflow.get_run(run_id=run_id).to_dictionary()["info"]["artifact_u
 
 # COMMAND ----------
 
+# Insitantiate model_name, to be used if we do not want to re-register the model
 model_name = f"{config.catalog_name}.{config.schema_name}.model_demo"
+
+# COMMAND ----------
+
 model_version = mlflow.register_model(
     model_uri=f'runs:/{run_id}/lightgbm-pipeline-model',
     name=model_name,
