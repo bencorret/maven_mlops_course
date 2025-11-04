@@ -18,3 +18,8 @@ tasks:
       - rm -rf .venv
       - task: create-venv
       - uv sync --extra dev
+
+  build:
+    desc: Build the project
+    cmds:
+      - uv build
