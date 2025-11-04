@@ -2,7 +2,7 @@
 import json
 import mlflow
 import os
-from house_price.common import is_databricks
+from house_price.utils import is_databricks
 
 
 # COMMAND ----------

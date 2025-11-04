@@ -22,7 +22,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from lightgbm import LGBMRegressor
 from mlflow.models import infer_signature
-from house_price.common import is_databricks
+from house_price.utils import is_databricks
 from dotenv import load_dotenv
 import os
 from mlflow import MlflowClient
